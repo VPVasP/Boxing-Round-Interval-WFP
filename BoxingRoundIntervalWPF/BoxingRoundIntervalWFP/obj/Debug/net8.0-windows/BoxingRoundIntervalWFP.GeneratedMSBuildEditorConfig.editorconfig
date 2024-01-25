@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BoxingRoundIntervalWFP
-build_property.ProjectDir = C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPF\BoxingRoundIntervalWFP\
+build_property.ProjectDir = C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPFGithub\Boxing-Round-Interval-WFP\BoxingRoundIntervalWPF\BoxingRoundIntervalWFP\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

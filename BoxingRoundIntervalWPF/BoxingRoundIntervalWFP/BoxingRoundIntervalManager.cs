@@ -18,7 +18,7 @@ namespace BoxingRoundIntervalWFP
         {
 
             Console.WriteLine("BoxingRoundIntervalManager initialized.");
-            mainWindow.BeginCountdown();
+            mainWindow.BeginRoundCountdown();
         }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj": {}
+    "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPFGithub\\Boxing-Round-Interval-WFP\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj": {
+    "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPFGithub\\Boxing-Round-Interval-WFP\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj",
+        "projectUniqueName": "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPFGithub\\Boxing-Round-Interval-WFP\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj",
         "projectName": "BoxingRoundIntervalWFP",
-        "projectPath": "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj",
+        "projectPath": "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPFGithub\\Boxing-Round-Interval-WFP\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\BoxingRoundIntervalWFP.csproj",
         "packagesPath": "C:\\Users\\vasil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\obj\\",
+        "outputPath": "C:\\Users\\vasil\\Desktop\\C#\\BoxingRoundIntervalWPFGithub\\Boxing-Round-Interval-WFP\\BoxingRoundIntervalWPF\\BoxingRoundIntervalWFP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vasil\\AppData\\Roaming\\NuGet\\NuGet.Config",
