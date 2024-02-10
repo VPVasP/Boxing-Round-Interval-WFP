@@ -25,6 +25,7 @@ namespace BoxingRoundIntervalWFP
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private bool startedTraining = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +36,10 @@ namespace BoxingRoundIntervalWFP
             InitializeRoundTimer();
             InitializeRestTimer();
             BeginCountdown();
+            TotalTrainingLengthMenu = "Total Training ";
+            RoundLengthMenu = "Round Length ";
+            _restLengthMenu = "Rest Time ";
+            _roundsMenu = "Rounds ";
         }
 
         #region Initialization 
@@ -60,6 +65,14 @@ namespace BoxingRoundIntervalWFP
         }
         #endregion
 
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            startedTraining = true;
+            Button startButton = (Button)sender;
+            startButton.Visibility = Visibility.Collapsed;
+            BeginCountdown();
+        }
         #region GetReadyCountDownTimerFunctions
         private void GetReadyCountdownTimer(object? sender, EventArgs e)
         {
@@ -71,28 +84,25 @@ namespace BoxingRoundIntervalWFP
                     UpdateUIGetReadyCountdown();
                     OnPropertyChanged(nameof(CountdownText));
                 }
-               if(countdownTime==0)
+                if (countdownTime == 0)
                 {
-                    countdownTimer.Stop(); 
+                    countdownTimer.Stop();
 
-                 
-                  
+                    BeginRoundCountdown();
 
-                    BeginRoundCountdown(); 
-                
                 }
             }
         }
 
-            public void BeginCountdown()
+        public void BeginCountdown()
         {
-            if (countdownTimer != null)
+            if (countdownTimer != null && startedTraining)
             {
                 countdownTimer.Start();
             }
         }
 
-      
+
 
         private void UpdateUIGetReadyCountdown()
         {
@@ -101,6 +111,10 @@ namespace BoxingRoundIntervalWFP
             _countdownText = "Get Ready! " + ($"Time Remaining: {countdownTime / 60:00}:{countdownTime % 60:00}");
             _fightText = "";
             _restText = "";
+            TotalTrainingLengthMenu = " ";
+            RoundLengthMenu = " ";
+            RestTimeMenu = " ";
+            RoundsMenu = " ";
             Debug.WriteLine("GET READY!");
         }
 
@@ -113,7 +127,7 @@ namespace BoxingRoundIntervalWFP
         #region RoundFunctions
         public void BeginRoundCountdown()
         {
-            if (beginRoundTimer != null)
+            if (beginRoundTimer != null && startedTraining)
             {
                 beginRoundTimer.Start();
             }
@@ -121,7 +135,7 @@ namespace BoxingRoundIntervalWFP
 
         private void BeginRoundTimer(object? sender, EventArgs e)
         {
-            if (beginRoundTimer != null)
+            if (beginRoundTimer != null && startedTraining)
             {
                 if (fightTime > 0)
                 {
@@ -139,16 +153,17 @@ namespace BoxingRoundIntervalWFP
 
         private void UIFight()
         {
-          
 
-
-           
             int minutes = fightTime / 60;
             int seconds = fightTime % 60;
             Debug.WriteLine($"Time Remaining: {minutes:00}:{seconds:00}");
             FightText = "Fight " + ($"\"Time Remaining: {minutes:00}:{seconds:00}");
             RestText = "";
             CountdownText = "";
+            TotalTrainingLengthMenu = " ";
+            RoundLengthMenu = " ";
+            RestTimeMenu = " ";
+            RoundsMenu = " ";
             OnPropertyChanged(nameof(FightText));
             Debug.WriteLine("FIGHT!");
         }
@@ -157,7 +172,7 @@ namespace BoxingRoundIntervalWFP
         #region RestFunctions
         public void BeginRestCountdown()
         {
-            if (beginRestTimer != null)
+            if (beginRestTimer != null && startedTraining)
             {
                 beginRestTimer.Start();
             }
@@ -186,17 +201,17 @@ namespace BoxingRoundIntervalWFP
             set
             {
                 _countdownText = value;
-                OnPropertyChanged(); 
+                OnPropertyChanged();
             }
         }
-        private string _countdownText="";
+        private string _countdownText = "";
 
         private void UpdateUIRest()
         {
             int minutes = restTime / 60;
             int seconds = restTime % 60;
             Debug.WriteLine($"Time Remaining: {minutes:00}:{seconds:00}");
-            RestText = "Rest "+ ($"\"Time Remaining: {minutes:00}:{seconds:00}");
+            RestText = "Rest " + ($"\"Time Remaining: {minutes:00}:{seconds:00}");
             FightText = "";
             CountdownText = "";
         }
@@ -225,7 +240,53 @@ namespace BoxingRoundIntervalWFP
         }
         private string _restText = "";
         #endregion
+
+        #region MenuUI
+        public string TotalTrainingLengthMenu
+        {
+            get { return _totalTrainingLengthMenu; }
+            set
+            {
+                _totalTrainingLengthMenu = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _totalTrainingLengthMenu = "";
+    
+        public string RoundLengthMenu
+        {
+            get { return _roundLengthMenu; }
+            set
+            {
+                _roundLengthMenu  = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _roundLengthMenu= "";
+
+        public string RestTimeMenu
+        {
+            get { return _restLengthMenu; }
+            set
+            {
+                _restLengthMenu = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _restLengthMenu = "";
+
+        public string RoundsMenu
+        {
+            get { return _roundsMenu; }
+            set
+            {
+                _roundsMenu = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _roundsMenu = "";
+        #endregion MenuUI
+
     }
-
-
 }
+
