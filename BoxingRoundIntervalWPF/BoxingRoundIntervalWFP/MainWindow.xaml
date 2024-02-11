@@ -43,11 +43,28 @@
            HorizontalAlignment="Center"
            Margin="0,150,0,0" />
 
+        <Button Content="-" FontSize="24" FontWeight="Bold"
+        HorizontalAlignment="Right" VerticalAlignment="Top"
+        Margin="0,200,50,0" Click="SubtractRoundLength" />
+
+        
+        <Button Content="+" FontSize="24" FontWeight="Bold"
+        HorizontalAlignment="Right" VerticalAlignment="Top"
+        Margin="0,200,100,0" Click="AddRoundLength" />
+
         <TextBlock Text="{Binding Path=RestTimeMenu, Mode=OneWay}"
            FontSize="48"
            HorizontalAlignment="Center"
            Margin="0,250,0,0" 
            Visibility="Visible" />
+
+        <Button Content="-" FontSize="24" FontWeight="Bold"
+        HorizontalAlignment="Right" VerticalAlignment="Top"
+        Margin="0,250,50,0" Click="SubtractRestLength" />
+
+        <Button Content="+" FontSize="24" FontWeight="Bold"
+        HorizontalAlignment="Right" VerticalAlignment="Top"
+        Margin="0,250,100,0" Click="AddRestLength" />
 
         <TextBlock Text="{Binding Path=RoundsMenu, Mode=OneWay}"
            FontSize="48"
@@ -55,8 +72,16 @@
            Margin="0,350,0,0"
            Visibility="Visible" />
 
+        <Button Content="-" FontSize="24" FontWeight="Bold"
+ HorizontalAlignment="Right" VerticalAlignment="Top"
+ Margin="0,300,50,0" Click="SubtractRounds" />
+
+        <Button Content="+" FontSize="24" FontWeight="Bold"
+ HorizontalAlignment="Right" VerticalAlignment="Top"
+ Margin="0,300,100,0" Click="AddRounds" />
+
         <Button Content="Begin Training" FontSize="24" FontWeight="Bold"
-                HorizontalAlignment="Center" VerticalAlignment="Top"
-                Margin="0,450,0,0" Click="StartButton_Click" />
+        HorizontalAlignment="Center" VerticalAlignment="Top"
+        Margin="0,450,0,0" Click="BeginTrainingButton" />
     </Grid>
 </Window>

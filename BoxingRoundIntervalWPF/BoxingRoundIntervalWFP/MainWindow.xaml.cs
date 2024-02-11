@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Converters;
 using System.Windows.Threading;
 
 namespace BoxingRoundIntervalWFP
@@ -15,13 +17,13 @@ namespace BoxingRoundIntervalWFP
         private DispatcherTimer beginRoundTimer = new DispatcherTimer();
         private DispatcherTimer beginRestTimer = new DispatcherTimer();
 
-        private int countdownTime = 5;
+        private int countdownTime = 0;
         private int currentRound = 1;
-        private int fightTime = 5;
-        private int restTime = 5;
-
-        private int initialRoundTime = 5;
-        private int initialRestTime = 5;
+        private float fightTime = 0;
+        private float restTime = 0;
+        private float totalTrainingTime;
+        private float initialRoundTime = 0;
+        private float initialRestTime = 0;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -37,9 +39,21 @@ namespace BoxingRoundIntervalWFP
             InitializeRestTimer();
             BeginCountdown();
             TotalTrainingLengthMenu = "Total Training ";
-            RoundLengthMenu = "Round Length ";
-            _restLengthMenu = "Rest Time ";
-            _roundsMenu = "Rounds ";
+
+            float totalTrainingMinutes = (int)(totalTrainingTime / 60);
+            float totalTrainingSeconds = (int)(totalTrainingTime % 60);
+
+
+            float roundMenuMinutes = (int)(initialRoundTime / 60);
+            float roundMenuSeconds = (int)(initialRoundTime % 60);
+
+            float restMenuMinutes = (int)(initialRestTime / 60);
+            float restMenuSeconds = (int)(initialRestTime % 60);
+
+            TotalTrainingLengthMenu = "Total Training " + ($"\": {totalTrainingMinutes:00}:{totalTrainingSeconds:00}");
+            RoundLengthMenu = "Round Length " + ($"\"RoundLength: {roundMenuMinutes:00}:{roundMenuSeconds:00}");
+            _restLengthMenu = "Rest Time " + ($"\"RoundLength: {restMenuMinutes:00}:{restMenuSeconds:00}");
+            _roundsMenu = "Rounds " + currentRound;
         }
 
         #region Initialization 
@@ -56,16 +70,103 @@ namespace BoxingRoundIntervalWFP
             beginRoundTimer.Interval = TimeSpan.FromSeconds(1);
             beginRoundTimer.Tick += BeginRoundTimer;
         }
-
+        #endregion Initialization
         private void InitializeRestTimer()
         {
             beginRestTimer = new DispatcherTimer();
             beginRestTimer.Interval = TimeSpan.FromSeconds(1);
             beginRestTimer.Tick += BeginRestTimer;
         }
-        #endregion
+        #region AddAndSubtract
+        private void TotalTrainingTime()
+        {
+            totalTrainingTime = initialRoundTime * MathF.Max(0f, initialRoundTime * restTime);
+            int minutes = (int)(totalTrainingTime / 60);
+            int seconds = (int)(totalTrainingTime % 60);
+            TotalTrainingLengthMenu = "Total Training " + $"\": {minutes:00}:{seconds:00}\"";
+        }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
+        private void SubtractRoundLength(object sender, EventArgs e)
+        {
+            Button subtractRoundsLengthButton = (Button)sender;
+            initialRoundTime -= 5f;
+            if (initialRoundTime < 0f)
+            {
+                initialRoundTime = 0f;
+            }
+            int minutes = (int)(initialRoundTime / 60);
+            int seconds = (int)(initialRoundTime % 60);
+            RoundLengthMenu = "Round Length " + $"\": {minutes:00}:{seconds:00}\"";
+            totalTrainingTime += initialRoundTime * MathF.Max(0f, initialRoundTime * restTime);
+            //TotalTrainingTime();
+        }
+
+        private void AddRoundLength(object sender, EventArgs e)
+        {
+            Button addRoundsLengthButton = (Button)sender;
+            initialRoundTime += 5f;
+            if (initialRoundTime < 0f)
+            {
+                initialRoundTime = 0f;
+            }
+            int minutes = (int)(initialRoundTime / 60);
+            int seconds = (int)(initialRoundTime % 60);
+            RoundLengthMenu = "Round Length " + $"\": {minutes:00}:{seconds:00}\"";
+            totalTrainingTime += initialRoundTime * MathF.Max(0f, initialRoundTime * restTime);
+            TotalTrainingLengthMenu = "Total Training " + $"\": {minutes:00}:{seconds:00}\"";
+            //TotalTrainingTime();
+        }
+        private void SubtractRestLength(object sender, EventArgs e)
+        {
+            Button decreaseRestLengthButton = (Button)sender;
+            restTime -= 5f;
+            if (restTime < 0f)
+            {
+                restTime = 0f;
+            }
+            int minutes = (int)(restTime / 60);
+            int seconds = (int)(restTime % 60);
+
+            RestTimeMenu = "Rest Length " + $"\": {minutes:00}:{seconds:00}\"";
+            totalTrainingTime -= restTime * MathF.Max(0f, initialRoundTime * restTime);
+            TotalTrainingLengthMenu = "Total Training " + $"\": {minutes:00}:{seconds:00}\"";
+        }
+        private void AddRestLength(object sender, EventArgs e)
+        {
+            Button addRestLengthButton = (Button)sender;
+            restTime += 5f;
+            if (restTime < 0f)
+            {
+                restTime = 0f;
+            }
+            int minutes = (int)(restTime / 60);
+            int seconds = (int)(restTime % 60);
+
+            RestTimeMenu = "Rest Length " + $"\": {minutes:00}:{seconds:00}\"";
+            totalTrainingTime += restTime * MathF.Max(0f, initialRoundTime * restTime);
+            TotalTrainingLengthMenu = "Total Training " + $"\": {minutes:00}:{seconds:00}\"";
+        }
+
+
+        private void SubtractRounds(object sender, EventArgs e)
+        {
+            Button addRoundsButton = (Button)sender;
+            currentRound -= 1;
+            currentRound = (int)MathF.Max(1, currentRound);
+            RoundsMenu = "Rounds " + currentRound;
+        }
+        private void AddRounds(object sender, EventArgs e)
+        {
+            Button addRoundsButton = (Button)sender;
+            currentRound += 1;
+            currentRound = (int)MathF.Max(1, currentRound);
+            RoundsMenu = "Rounds " + currentRound;
+            
+        }
+        #endregion AddAndSubtract
+
+
+        private void BeginTrainingButton(object sender, RoutedEventArgs e)
         {
 
             startedTraining = true;
@@ -154,8 +255,8 @@ namespace BoxingRoundIntervalWFP
         private void UIFight()
         {
 
-            int minutes = fightTime / 60;
-            int seconds = fightTime % 60;
+            float minutes = fightTime / 60;
+            float seconds = fightTime % 60;
             Debug.WriteLine($"Time Remaining: {minutes:00}:{seconds:00}");
             FightText = "Fight " + ($"\"Time Remaining: {minutes:00}:{seconds:00}");
             RestText = "";
@@ -208,8 +309,8 @@ namespace BoxingRoundIntervalWFP
 
         private void UpdateUIRest()
         {
-            int minutes = restTime / 60;
-            int seconds = restTime % 60;
+            float minutes = restTime / 60;
+            float seconds = restTime % 60;
             Debug.WriteLine($"Time Remaining: {minutes:00}:{seconds:00}");
             RestText = "Rest " + ($"\"Time Remaining: {minutes:00}:{seconds:00}");
             FightText = "";
