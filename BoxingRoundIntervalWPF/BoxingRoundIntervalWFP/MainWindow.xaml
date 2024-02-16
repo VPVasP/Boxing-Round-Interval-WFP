@@ -43,12 +43,12 @@
            HorizontalAlignment="Center"
            Margin="0,150,0,0" />
 
-        <Button Content="-" FontSize="24" FontWeight="Bold"
+        <Button  x:Name="subtractRoundLengthButton" Content="-" FontSize="24" FontWeight="Bold"
         HorizontalAlignment="Right" VerticalAlignment="Top"
         Margin="0,200,50,0" Click="SubtractRoundLength" />
 
         
-        <Button Content="+" FontSize="24" FontWeight="Bold"
+        <Button x:Name="addRoundLengthButton" Content="+" FontSize="24" FontWeight="Bold"
         HorizontalAlignment="Right" VerticalAlignment="Top"
         Margin="0,200,100,0" Click="AddRoundLength" />
 
@@ -58,11 +58,11 @@
            Margin="0,250,0,0" 
            Visibility="Visible" />
 
-        <Button Content="-" FontSize="24" FontWeight="Bold"
+        <Button x:Name="subtractRestLengthButton" Content="-" FontSize="24" FontWeight="Bold"
         HorizontalAlignment="Right" VerticalAlignment="Top"
         Margin="0,250,50,0" Click="SubtractRestLength" />
-
-        <Button Content="+" FontSize="24" FontWeight="Bold"
+        
+        <Button x:Name="addRestLengthButton" Content="+" FontSize="24" FontWeight="Bold"
         HorizontalAlignment="Right" VerticalAlignment="Top"
         Margin="0,250,100,0" Click="AddRestLength" />
 
@@ -72,11 +72,11 @@
            Margin="0,350,0,0"
            Visibility="Visible" />
 
-        <Button Content="-" FontSize="24" FontWeight="Bold"
+        <Button x:Name="subtractRoundsButton" Content="-" FontSize="24" FontWeight="Bold"
  HorizontalAlignment="Right" VerticalAlignment="Top"
  Margin="0,300,50,0" Click="SubtractRounds" />
 
-        <Button Content="+" FontSize="24" FontWeight="Bold"
+        <Button x:Name="addRoundsButton" Content="+" FontSize="24" FontWeight="Bold"
  HorizontalAlignment="Right" VerticalAlignment="Top"
  Margin="0,300,100,0" Click="AddRounds" />
 
