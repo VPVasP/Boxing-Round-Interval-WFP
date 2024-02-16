@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BoxingRoundIntervalWFP"
         mc:Ignorable="d"
         Title="BoxingRoundInterval" Height="450" Width="800"
-        Background="Gray">
+        Background="Tomato">
 
     <Grid>
         <TextBlock Text="{Binding Path=CountdownText, Mode=OneWay}"

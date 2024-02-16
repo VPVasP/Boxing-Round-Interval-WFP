@@ -39,3 +39,4 @@ C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPFGithub\Boxing-Round-Interval-WFP
 C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPFGithub\Boxing-Round-Interval-WFP\BoxingRoundIntervalWPF\BoxingRoundIntervalWFP\obj\Debug\net8.0-windows\BoxingRoundIntervalWFP.pdb
 C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPFGithub\Boxing-Round-Interval-WFP\BoxingRoundIntervalWPF\BoxingRoundIntervalWFP\obj\Debug\net8.0-windows\BoxingRoundIntervalWFP.genruntimeconfig.cache
 C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPFGithub\Boxing-Round-Interval-WFP\BoxingRoundIntervalWPF\BoxingRoundIntervalWFP\obj\Debug\net8.0-windows\ref\BoxingRoundIntervalWFP.dll
+C:\Users\vasil\Desktop\C#\BoxingRoundIntervalWPFGithub\Boxing-Round-Interval-WFP\BoxingRoundIntervalWPF\BoxingRoundIntervalWFP\obj\Debug\net8.0-windows\BoxingRoundIntervalWFP_Content.g.cs

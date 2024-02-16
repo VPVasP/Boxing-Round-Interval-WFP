@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Converters;
 using System.Windows.Threading;
 using System.Media;
 
@@ -18,11 +15,12 @@ namespace BoxingRoundIntervalWFP
 
 
         private BoxingRoundIntervalManager manager;
+        //timers
         private DispatcherTimer countdownTimer = new DispatcherTimer();
         private DispatcherTimer beginRoundTimer = new DispatcherTimer();
         private DispatcherTimer beginRestTimer = new DispatcherTimer();
 
-
+        //values
         private int countdownTime = 5;
         private int rounds=1;
         private int currentRound = 1;
@@ -43,12 +41,16 @@ namespace BoxingRoundIntervalWFP
             InitializeComponent();
             DataContext = this;
             manager = new BoxingRoundIntervalManager(this);
+
+            //initialize the manager and the timers
             manager.Initialize();
             InitializeCountdownTimer();
             InitializeRoundTimer();
             InitializeRestTimer();
+            //find themenu buttons
             FindButtons();
 
+            //values for the menu ui
             float totalTrainingMinutes = (int)(totalTrainingTime / 60);
             float totalTrainingSeconds = (int)(totalTrainingTime % 60);
 
@@ -58,6 +60,7 @@ namespace BoxingRoundIntervalWFP
             float restMenuMinutes = (int)(initialRestTime / 60);
             float restMenuSeconds = (int)(initialRestTime % 60);
 
+            //values for the menu ui
             RoundLengthMenu = "Round Length " + ($": {roundMenuMinutes:00}:{roundMenuSeconds:00}");
             RestTimeLengthMenu = "Rest Time " + ($": {restMenuMinutes:00}:{restMenuSeconds:00}");
             _roundsMenu = "Rounds " + currentRound;
@@ -71,7 +74,7 @@ namespace BoxingRoundIntervalWFP
         private void FindButtons()
         {
 
-
+            //we find all the menu buttons and assign them
             subtractRestLengthButton = (Button)FindName("subtractRestLengthButton");
             addRestLengthButton = (Button)FindName("addRestLengthButton");
 
@@ -84,6 +87,7 @@ namespace BoxingRoundIntervalWFP
 
         private void DisableButtons()
         {
+            //we disable all the menu buttons
             subtractRestLengthButton.Visibility = Visibility.Collapsed;
             addRestLengthButton.Visibility = Visibility.Collapsed;
 
@@ -94,38 +98,35 @@ namespace BoxingRoundIntervalWFP
             subtractRoundsButton.Visibility = Visibility.Collapsed;
             addRoundsButton.Visibility = Visibility.Collapsed;
         }
-        //private void DisableTexts()
-        //{
-        //    TotalTrainingLengthMenu = "";
-        //    RoundLengthMenu = "";
-        //    _restLengthMenu = "";
-        //}
+
+        //initializing timer for countdown
         private void InitializeCountdownTimer()
         {
             countdownTimer = new DispatcherTimer();
             countdownTimer.Interval = TimeSpan.FromSeconds(1);
             countdownTimer.Tick += GetReadyCountdownTimer;
         }
-
+        //intialize round timer
         private void InitializeRoundTimer()
         {
             beginRoundTimer = new DispatcherTimer();
             beginRoundTimer.Interval = TimeSpan.FromSeconds(1);
             beginRoundTimer.Tick += BeginRoundTimer;
         }
-        #endregion Initialization
+        //intiialize rest timer
         private void InitializeRestTimer()
         {
             beginRestTimer = new DispatcherTimer();
             beginRestTimer.Interval = TimeSpan.FromSeconds(1);
             beginRestTimer.Tick += BeginRestTimer;
         }
+        #endregion Initialization
 
-
+        //button that begins the training on click
         private void BeginTrainingButton(object sender, RoutedEventArgs e)
         {
 
-
+            //start the training
             startedTraining = true;
             Button startButton = (Button)sender;
             startButton.Visibility = Visibility.Collapsed;
@@ -135,9 +136,11 @@ namespace BoxingRoundIntervalWFP
             initialRoundTime = fightTime;
             initialRestTime = restTime;
             totalRound = rounds;
-            PlayCountDownSound("CountDownSound.wav");
+            //play the countodown sound
+            PlaySoundEffect("CountDownSound.wav");
         }
         #region AddAndSubtract
+        //updating the total training time
         private void TotalTrainingTime()
         {
             totalTrainingTime = currentRound * (fightTime + restTime);
@@ -145,7 +148,7 @@ namespace BoxingRoundIntervalWFP
             int seconds = (int)(totalTrainingTime % 60);
             TotalTrainingLengthMenu = "Total Training " + ($": {minutes:00}:{seconds:00}");
         }
-
+        //subsctract round length
         private void SubtractRoundLength(object sender, EventArgs e)
         {
             subtractRoundLengthButton = (Button)sender;
@@ -160,7 +163,7 @@ namespace BoxingRoundIntervalWFP
             TotalTrainingTime();
         }
 
-
+        //add round length
         private void AddRoundLength(object sender, EventArgs e)
         {
             addRoundLengthButton = (Button)sender;
@@ -174,6 +177,7 @@ namespace BoxingRoundIntervalWFP
             RoundLengthMenu = "Round Length " + ($": {minutes:00}:{seconds:00}");
             TotalTrainingTime();
         }
+        //substract rest length
         private void SubtractRestLength(object sender, EventArgs e)
         {
             subtractRestLengthButton = (Button)sender;
@@ -188,7 +192,7 @@ namespace BoxingRoundIntervalWFP
             RestTimeLengthMenu = "Rest Time " + ($": {minutes:00}:{seconds:00}");
             TotalTrainingTime();
         }
-
+        // add rest length
         private void AddRestLength(object sender, EventArgs e)
         {
             addRestLengthButton = (Button)sender;
@@ -204,7 +208,7 @@ namespace BoxingRoundIntervalWFP
             TotalTrainingTime();
         }
 
-
+        //subsctract rounds
         private void SubtractRounds(object sender, EventArgs e)
         {
             addRoundsButton = (Button)sender;
@@ -213,6 +217,7 @@ namespace BoxingRoundIntervalWFP
             RoundsMenu = "Rounds " + rounds;
             TotalTrainingTime();
         }
+        //add rounds
         private void AddRounds(object sender, EventArgs e)
         {
             addRoundsButton = (Button)sender;
@@ -226,6 +231,8 @@ namespace BoxingRoundIntervalWFP
 
 
         #region GetReadyCountDownTimerFunctions
+
+        //beging countdown
         public void BeginCountdown()
         {
             if (countdownTimer != null)
@@ -233,7 +240,7 @@ namespace BoxingRoundIntervalWFP
                 countdownTimer.Start();
             }
         }
-
+        //countdown timer 
         private void GetReadyCountdownTimer(object? sender, EventArgs e)
         {
             if (countdownTimer != null)
@@ -244,10 +251,11 @@ namespace BoxingRoundIntervalWFP
                     UpdateUIGetReadyCountdown();
                     OnPropertyChanged(nameof(CountdownText));
                 }
+                //when countdown reaches 0 we stop the timer,beging the round coundown and play a sound
                 if (countdownTime == 0)
                 {
                     countdownTimer.Stop();
-                    PlayCountDownSound("BellSound.wav");
+                    PlaySoundEffect("BellSound.wav");
                     BeginRoundCountdown();
 
                 }
@@ -256,7 +264,7 @@ namespace BoxingRoundIntervalWFP
 
 
 
-
+        //update ui for countdown
         private void UpdateUIGetReadyCountdown()
         {
             OnPropertyChanged(nameof(CountdownText));
@@ -278,6 +286,7 @@ namespace BoxingRoundIntervalWFP
         #endregion
 
         #region RoundFunctions
+        //begin round countdown
         public void BeginRoundCountdown()
         {
             if (beginRoundTimer != null && startedTraining)
@@ -285,7 +294,7 @@ namespace BoxingRoundIntervalWFP
                 beginRoundTimer.Start();
             }
         }
-
+        //begin the round timer
         private void BeginRoundTimer(object? sender, EventArgs e)
         {
             if (beginRoundTimer != null && startedTraining)
@@ -300,7 +309,7 @@ namespace BoxingRoundIntervalWFP
                 else if (fightTime == 0)
                 {
                     fightTime = initialRoundTime;
-                    PlayCountDownSound("BellSound.wav");
+                    PlaySoundEffect("BellSound.wav");
                     beginRoundTimer.Stop();
                     BeginRestCountdown();
                 }
@@ -311,7 +320,7 @@ namespace BoxingRoundIntervalWFP
                 }
             }
         }
-
+        //update ui for round fighting
         private void UIFight()
         {
 
@@ -333,6 +342,7 @@ namespace BoxingRoundIntervalWFP
         #endregion
 
         #region RestFunctions
+        //begin rest countdown
         public void BeginRestCountdown()
         {
             if (beginRestTimer != null && startedTraining)
@@ -340,7 +350,7 @@ namespace BoxingRoundIntervalWFP
                 beginRestTimer.Start();
             }
         }
-
+        //begin rest timer 
         private void BeginRestTimer(object? sender, EventArgs e)
         {
             if (beginRestTimer != null && startedTraining)
@@ -350,10 +360,11 @@ namespace BoxingRoundIntervalWFP
                     restTime--;
                     UpdateUIRest();
                 }
+                //when rest timer is 0 stop the timer begin round countdown,current rounds becomes +1 and they play the countdown sound
                 else if (restTime == 0)
                 {
                     restTime = initialRestTime;
-                    PlayCountDownSound("BellSound.wav");
+                    PlaySoundEffect("BellSound.wav");
                     beginRestTimer.Stop();
                     BeginRoundCountdown();
                     currentRound += 1;
@@ -361,17 +372,10 @@ namespace BoxingRoundIntervalWFP
 
             }
         }
-        public string CountdownText
-        {
-            get { return _countdownText; }
-            set
-            {
-                _countdownText = value;
-                OnPropertyChanged();
-            }
-        }
+        //countdown text string
+       
         private string _countdownText = "";
-
+        //update ui during rest
         private void UpdateUIRest()
         {
             float minutes = restTime / 60;
@@ -384,6 +388,15 @@ namespace BoxingRoundIntervalWFP
         #endregion
 
         #region Properties
+        public string CountdownText
+        {
+            get { return _countdownText; }
+            set
+            {
+                _countdownText = value;
+                OnPropertyChanged();
+            }
+        }
         public string FightText
         {
             get { return _fightText; }
@@ -486,7 +499,8 @@ namespace BoxingRoundIntervalWFP
 
 
         #region AudioManager
-        private void PlayCountDownSound(string audioClipFilePath)
+        //play sound effect
+        private void PlaySoundEffect(string audioClipFilePath)
         {
             SoundPlayer soundPlayer = new SoundPlayer();
             soundPlayer.SoundLocation = audioClipFilePath;
@@ -494,10 +508,9 @@ namespace BoxingRoundIntervalWFP
         }
         #endregion AudioManager
 
-        #region restartApplication
        
         }
-        #endregion restartApplication
+
     }
 
 
