@@ -20,8 +20,21 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Margin="0,50,0,0" />
+        
+        <TextBlock Text="{Binding Path=RoundGame, Mode=OneWay}"
+                   FontSize="48"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,50,0,0" />
+        <TextBlock Text="{Binding Path=TotalRoundGame, Mode=OneWay}"
+                   FontSize="48"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,0" />
 
-        <TextBlock Text="{Binding Path=RestText, Mode=OneWay}"
+
+
+        <TextBlock Text="{Binding Path=GameRestLength, Mode=OneWay}"
                    FontSize="48"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
@@ -52,7 +65,7 @@
         HorizontalAlignment="Right" VerticalAlignment="Top"
         Margin="0,200,100,0" Click="AddRoundLength" />
 
-        <TextBlock Text="{Binding Path=RestTimeMenu, Mode=OneWay}"
+        <TextBlock Text="{Binding Path=RestTimeLengthMenu, Mode=OneWay}"
            FontSize="48"
            HorizontalAlignment="Center"
            Margin="0,250,0,0" 

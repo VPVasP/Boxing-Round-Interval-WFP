@@ -20,9 +20,11 @@ namespace BoxingRoundIntervalWFP
         private DispatcherTimer beginRoundTimer = new DispatcherTimer();
         private DispatcherTimer beginRestTimer = new DispatcherTimer();
 
-        
-        private int countdownTime = 0;
+
+        private int countdownTime = 5;
+        private int rounds;
         private int currentRound = 1;
+        private int totalRound = 0;
         private float fightTime = 0;
         private float restTime = 0;
         private float totalTrainingTime;
@@ -32,6 +34,8 @@ namespace BoxingRoundIntervalWFP
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private bool startedTraining = false;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,24 +45,22 @@ namespace BoxingRoundIntervalWFP
             InitializeCountdownTimer();
             InitializeRoundTimer();
             InitializeRestTimer();
-            BeginCountdown();
-            TotalTrainingLengthMenu = "Total Training ";
+            FindButtons();
 
             float totalTrainingMinutes = (int)(totalTrainingTime / 60);
             float totalTrainingSeconds = (int)(totalTrainingTime % 60);
-
 
             float roundMenuMinutes = (int)(initialRoundTime / 60);
             float roundMenuSeconds = (int)(initialRoundTime % 60);
 
             float restMenuMinutes = (int)(initialRestTime / 60);
             float restMenuSeconds = (int)(initialRestTime % 60);
-            TotalTrainingLengthMenu = "Total Training " + ($": {totalTrainingMinutes:00}:{totalTrainingSeconds:00}");
+
             RoundLengthMenu = "Round Length " + ($": {roundMenuMinutes:00}:{roundMenuSeconds:00}");
-            _restLengthMenu = "Rest Time " + ($": {restMenuMinutes:00}:{restMenuSeconds:00}");
+            RestTimeLengthMenu = "Rest Time " + ($": {restMenuMinutes:00}:{restMenuSeconds:00}");
             _roundsMenu = "Rounds " + currentRound;
             _countdownText = "";
-            FindButtons();
+            TotalTrainingLengthMenu = "Total Training " + ($": {totalTrainingMinutes:00}:{totalTrainingSeconds:00}");
         }
 
         #region Initialization 
@@ -73,9 +75,10 @@ namespace BoxingRoundIntervalWFP
             subtractRoundLengthButton = (Button)FindName("subtractRoundLengthButton");
             addRoundLengthButton = (Button)FindName("addRoundLengthButton");
 
-            subtractRoundsButton =(Button)FindName("subtractRoundsButton");
-            addRoundsButton=(Button)FindName("addRoundsButton");
+            subtractRoundsButton = (Button)FindName("subtractRoundsButton");
+            addRoundsButton = (Button)FindName("addRoundsButton");
         }
+
         private void DisableButtons()
         {
             subtractRestLengthButton.Visibility = Visibility.Collapsed;
@@ -88,13 +91,19 @@ namespace BoxingRoundIntervalWFP
             subtractRoundsButton.Visibility = Visibility.Collapsed;
             addRoundsButton.Visibility = Visibility.Collapsed;
         }
+        //private void DisableTexts()
+        //{
+        //    TotalTrainingLengthMenu = "";
+        //    RoundLengthMenu = "";
+        //    _restLengthMenu = "";
+        //}
         private void InitializeCountdownTimer()
         {
             countdownTimer = new DispatcherTimer();
             countdownTimer.Interval = TimeSpan.FromSeconds(1);
             countdownTimer.Tick += GetReadyCountdownTimer;
         }
-        
+
         private void InitializeRoundTimer()
         {
             beginRoundTimer = new DispatcherTimer();
@@ -118,15 +127,17 @@ namespace BoxingRoundIntervalWFP
             Button startButton = (Button)sender;
             startButton.Visibility = Visibility.Collapsed;
             BeginCountdown();
-            CountdownText = "";
-            FightText = "";
-            RestText = "";
             DisableButtons();
-    }
+            currentRound = 1;
+            initialRoundTime = fightTime;
+            initialRestTime = restTime;
+            totalRound = rounds;
+            //  DisableTexts();
+        }
         #region AddAndSubtract
         private void TotalTrainingTime()
         {
-            totalTrainingTime = currentRound * (initialRoundTime + restTime);
+            totalTrainingTime = currentRound * (fightTime + restTime);
             int minutes = (int)(totalTrainingTime / 60);
             int seconds = (int)(totalTrainingTime % 60);
             TotalTrainingLengthMenu = "Total Training " + ($": {minutes:00}:{seconds:00}");
@@ -135,13 +146,13 @@ namespace BoxingRoundIntervalWFP
         private void SubtractRoundLength(object sender, EventArgs e)
         {
             subtractRoundLengthButton = (Button)sender;
-            initialRoundTime -= 5f;
-            if (initialRoundTime < 0f)
+            fightTime -= 5f;
+            if (fightTime < 0f)
             {
-                initialRoundTime = 0f;
+                fightTime = 0f;
             }
-            int minutes = (int)(initialRoundTime / 60);
-            int seconds = (int)(initialRoundTime % 60);
+            int minutes = (int)(fightTime / 60);
+            int seconds = (int)(fightTime % 60);
             RoundLengthMenu = "Round Length " + ($": {minutes:00}:{seconds:00}");
             TotalTrainingTime();
         }
@@ -150,19 +161,19 @@ namespace BoxingRoundIntervalWFP
         private void AddRoundLength(object sender, EventArgs e)
         {
             addRoundLengthButton = (Button)sender;
-            initialRoundTime += 5f;
-            if (initialRoundTime < 0f)
+            fightTime += 5f;
+            if (fightTime < 0f)
             {
-                initialRoundTime = 0f;
+                fightTime = 0f;
             }
-            int minutes = (int)(initialRoundTime / 60);
-            int seconds = (int)(initialRoundTime % 60);
+            int minutes = (int)(fightTime / 60);
+            int seconds = (int)(fightTime % 60);
             RoundLengthMenu = "Round Length " + ($": {minutes:00}:{seconds:00}");
             TotalTrainingTime();
         }
         private void SubtractRestLength(object sender, EventArgs e)
         {
-            subtractRestLengthButton= (Button)sender;
+            subtractRestLengthButton = (Button)sender;
             restTime -= 5f;
             if (restTime < 0f)
             {
@@ -171,12 +182,13 @@ namespace BoxingRoundIntervalWFP
             int minutes = (int)(restTime / 60);
             int seconds = (int)(restTime % 60);
 
-             RestTimeMenu = "Rest Time " + ($": {minutes:00}:{seconds:00}");
+            RestTimeLengthMenu = "Rest Time " + ($": {minutes:00}:{seconds:00}");
             TotalTrainingTime();
         }
+
         private void AddRestLength(object sender, EventArgs e)
         {
-          addRestLengthButton = (Button)sender;
+            addRestLengthButton = (Button)sender;
             restTime += 5f;
             if (restTime < 0f)
             {
@@ -185,7 +197,7 @@ namespace BoxingRoundIntervalWFP
             int minutes = (int)(restTime / 60);
             int seconds = (int)(restTime % 60);
 
-            RestTimeMenu = "Rest Time " + ($": {minutes:00}:{seconds:00}");
+            RestTimeLengthMenu = "Rest Time " + ($": {minutes:00}:{seconds:00}");
             TotalTrainingTime();
         }
 
@@ -193,17 +205,17 @@ namespace BoxingRoundIntervalWFP
         private void SubtractRounds(object sender, EventArgs e)
         {
             addRoundsButton = (Button)sender;
-            currentRound -= 1;
-            currentRound = (int)MathF.Max(1, currentRound);
-            RoundsMenu = "Rounds " + currentRound;
+            rounds -= 1;
+            rounds = (int)MathF.Max(1, rounds);
+            RoundsMenu = "Rounds " + rounds;
             TotalTrainingTime();
         }
         private void AddRounds(object sender, EventArgs e)
         {
             addRoundsButton = (Button)sender;
-            currentRound += 1;
-            currentRound = (int)MathF.Max(1, currentRound);
-            RoundsMenu = "Rounds " + currentRound;
+            rounds += 1;
+            currentRound = (int)MathF.Max(1, rounds);
+            RoundsMenu = "Rounds " + rounds;
             TotalTrainingTime();
         }
         #endregion AddAndSubtract
@@ -239,7 +251,7 @@ namespace BoxingRoundIntervalWFP
             }
         }
 
-       
+
 
 
         private void UpdateUIGetReadyCountdown()
@@ -251,7 +263,7 @@ namespace BoxingRoundIntervalWFP
             _restText = "";
             TotalTrainingLengthMenu = " ";
             RoundLengthMenu = " ";
-            RestTimeMenu = " ";
+            RestTimeLengthMenu = " ";
             RoundsMenu = " ";
             Debug.WriteLine("GET READY!");
         }
@@ -296,12 +308,14 @@ namespace BoxingRoundIntervalWFP
             float seconds = fightTime % 60;
             Debug.WriteLine($"Fight Time Remaining: {minutes:00}:{seconds:00}");
             FightText = "Fight " + ($": {minutes:00} : {seconds:00}");
-            RestText = "";
+            RestTimeLengthMenu = "";
             CountdownText = "";
             TotalTrainingLengthMenu = " ";
             RoundLengthMenu = " ";
-            RestTimeMenu = " ";
+            GameRestLength = " ";
             RoundsMenu = " ";
+            RoundGame = "Current Round " + currentRound;
+            TotalRoundGame = "Total Round " + totalRound;
             OnPropertyChanged(nameof(FightText));
             Debug.WriteLine("FIGHT!");
         }
@@ -318,18 +332,19 @@ namespace BoxingRoundIntervalWFP
 
         private void BeginRestTimer(object? sender, EventArgs e)
         {
-            if (beginRestTimer != null)
+            if (beginRestTimer != null && startedTraining)
             {
                 if (restTime > 0)
                 {
                     restTime--;
                     UpdateUIRest();
                 }
-                if (restTime == 0)
+                else if (restTime == 0)
                 {
                     restTime = initialRestTime;
                     beginRestTimer.Stop();
                     BeginRoundCountdown();
+                    currentRound += 1;
                 }
             }
         }
@@ -349,7 +364,7 @@ namespace BoxingRoundIntervalWFP
             float minutes = restTime / 60;
             float seconds = restTime % 60;
             Debug.WriteLine($"Rest Time Remaining: {minutes:00}:{seconds:00}");
-            RestText = "Rest Time " + ($": {minutes:00}:{seconds:00}");
+            GameRestLength = "Rest Time " + ($": {minutes:00}:{seconds:00}");
             FightText = "";
             CountdownText = "";
         }
@@ -367,15 +382,7 @@ namespace BoxingRoundIntervalWFP
         }
         private string _fightText = "";
 
-        public string RestText
-        {
-            get { return _restText; }
-            set
-            {
-                _restText = value;
-                OnPropertyChanged();
-            }
-        }
+
         private string _restText = "";
         #endregion
 
@@ -390,28 +397,42 @@ namespace BoxingRoundIntervalWFP
             }
         }
         private string _totalTrainingLengthMenu = "";
-    
+        public string RestTimeLengthMenu
+        {
+            get { return _restTimeLengthMenu; }
+            set
+            {
+                _restTimeLengthMenu = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _restTimeLengthMenu = "";
         public string RoundLengthMenu
         {
             get { return _roundLengthMenu; }
             set
             {
-                _roundLengthMenu  = value;
+                _roundLengthMenu = value;
                 OnPropertyChanged();
             }
         }
-        private string _roundLengthMenu= "";
+        private string _roundLengthMenu = "";
 
-        public string RestTimeMenu
+
+        private string _restLengthMenu = "";
+
+
+        public string GameRestLength
         {
-            get { return _restLengthMenu; }
+            get { return _gameRestLength; }
             set
             {
-                _restLengthMenu = value;
+                _gameRestLength = value;
                 OnPropertyChanged();
             }
         }
-        private string _restLengthMenu = "";
+        private string _gameRestLength = "";
+
 
         public string RoundsMenu
         {
@@ -425,6 +446,31 @@ namespace BoxingRoundIntervalWFP
         private string _roundsMenu = "";
         #endregion MenuUI
 
+
+        public string RoundGame
+        {
+
+            get { return roundGame; }
+            set
+            {
+                roundGame = value;
+                OnPropertyChanged();
+            }
+        }
+        private string roundGame = "";
+
+
+        public string TotalRoundGame
+        {
+            get { return _totalgameMenu; }
+            set
+            {
+                _totalgameMenu = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _totalgameMenu = "";
     }
 }
+
 
