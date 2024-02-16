@@ -1,11 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Converters;
 using System.Windows.Threading;
+using System.Media;
 
 namespace BoxingRoundIntervalWFP
 {
@@ -34,7 +36,7 @@ namespace BoxingRoundIntervalWFP
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private bool startedTraining = false;
-
+        private bool countdownSoundPlayed = false;
 
         public MainWindow()
         {
@@ -132,7 +134,7 @@ namespace BoxingRoundIntervalWFP
             initialRoundTime = fightTime;
             initialRestTime = restTime;
             totalRound = rounds;
-            //  DisableTexts();
+            PlayCountDownSound("CountDownSound.wav");
         }
         #region AddAndSubtract
         private void TotalTrainingTime()
@@ -244,7 +246,7 @@ namespace BoxingRoundIntervalWFP
                 if (countdownTime == 0)
                 {
                     countdownTimer.Stop();
-
+                    PlayCountDownSound("BellSound.wav");
                     BeginRoundCountdown();
 
                 }
@@ -292,9 +294,12 @@ namespace BoxingRoundIntervalWFP
                     fightTime--;
                     UIFight();
                 }
-                if (fightTime == 0)
+           
+    
+              else  if (fightTime == 0)
                 {
                     fightTime = initialRoundTime;
+                    PlayCountDownSound("BellSound.wav");
                     beginRoundTimer.Stop();
                     BeginRestCountdown();
                 }
@@ -342,6 +347,7 @@ namespace BoxingRoundIntervalWFP
                 else if (restTime == 0)
                 {
                     restTime = initialRestTime;
+                    PlayCountDownSound("BellSound.wav");
                     beginRestTimer.Stop();
                     BeginRoundCountdown();
                     currentRound += 1;
@@ -470,6 +476,16 @@ namespace BoxingRoundIntervalWFP
             }
         }
         private string _totalgameMenu = "";
+
+
+        #region AudioManager
+        private void PlayCountDownSound(string audioClipFilePath)
+        {
+            SoundPlayer soundPlayer = new SoundPlayer();
+            soundPlayer.SoundLocation = audioClipFilePath;
+            soundPlayer.Play();
+        }
+        #endregion AudioManager
     }
 }
 
