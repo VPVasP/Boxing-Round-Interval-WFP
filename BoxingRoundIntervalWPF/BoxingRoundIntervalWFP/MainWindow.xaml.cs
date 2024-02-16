@@ -24,9 +24,9 @@ namespace BoxingRoundIntervalWFP
 
 
         private int countdownTime = 5;
-        private int rounds;
+        private int rounds=1;
         private int currentRound = 1;
-        private int totalRound = 0;
+        private int totalRound = 1;
         private float fightTime = 0;
         private float restTime = 0;
         private float totalTrainingTime;
@@ -63,6 +63,7 @@ namespace BoxingRoundIntervalWFP
             _roundsMenu = "Rounds " + currentRound;
             _countdownText = "";
             TotalTrainingLengthMenu = "Total Training " + ($": {totalTrainingMinutes:00}:{totalTrainingSeconds:00}");
+            totalRound = 1;
         }
 
         #region Initialization 
@@ -294,14 +295,19 @@ namespace BoxingRoundIntervalWFP
                     fightTime--;
                     UIFight();
                 }
-           
-    
-              else  if (fightTime == 0)
+
+
+                else if (fightTime == 0)
                 {
                     fightTime = initialRoundTime;
                     PlayCountDownSound("BellSound.wav");
                     beginRoundTimer.Stop();
                     BeginRestCountdown();
+                }
+                if (fightTime==0 &currentRound == totalRound)
+                {
+                    Environment.Exit(0);
+
                 }
             }
         }
@@ -319,8 +325,8 @@ namespace BoxingRoundIntervalWFP
             RoundLengthMenu = " ";
             GameRestLength = " ";
             RoundsMenu = " ";
-            RoundGame = "Current Round " + currentRound;
-            TotalRoundGame = "Total Round " + totalRound;
+            RoundGame = "Current Round" + currentRound + "/";
+            TotalRoundGame = "" + totalRound;
             OnPropertyChanged(nameof(FightText));
             Debug.WriteLine("FIGHT!");
         }
@@ -352,6 +358,7 @@ namespace BoxingRoundIntervalWFP
                     BeginRoundCountdown();
                     currentRound += 1;
                 }
+
             }
         }
         public string CountdownText
@@ -486,7 +493,12 @@ namespace BoxingRoundIntervalWFP
             soundPlayer.Play();
         }
         #endregion AudioManager
+
+        #region restartApplication
+       
+        }
+        #endregion restartApplication
     }
-}
+
 
 

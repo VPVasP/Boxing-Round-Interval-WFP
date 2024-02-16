@@ -9,92 +9,84 @@
         Background="Gray">
 
     <Grid>
-
         <TextBlock Text="{Binding Path=CountdownText, Mode=OneWay}"
-                   FontSize="48"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+               FontSize="48"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" />
 
         <TextBlock Text="{Binding Path=FightText, Mode=OneWay}"
-                   FontSize="48"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="0,50,0,0" />
-        
+               FontSize="48"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Margin="0,50,0,0" />
+
         <TextBlock Text="{Binding Path=RoundGame, Mode=OneWay}"
-                   FontSize="48"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   Margin="0,50,0,0" />
+               FontSize="48"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="100,50,50,0" />
         <TextBlock Text="{Binding Path=TotalRoundGame, Mode=OneWay}"
-                   FontSize="48"
-                   HorizontalAlignment="Right"
-                   VerticalAlignment="Top"
-                   Margin="0,0,0,0" />
-
-
+               FontSize="48"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="0,50,20,0" />
 
         <TextBlock Text="{Binding Path=GameRestLength, Mode=OneWay}"
-                   FontSize="48"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="0,100,0,0" 
-                   Visibility="Visible"/>
-
-
-
-
+               FontSize="48"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Margin="0,100,0,0" 
+               Visibility="Visible"/>
 
         <TextBlock Text="{Binding Path=TotalTrainingLengthMenu, Mode=OneWay}"
-           FontSize="48"
-           HorizontalAlignment="Center"
-           Margin="0,50,0,0" 
-           Visibility="Visible" />
+       FontSize="48"
+       HorizontalAlignment="Center"
+       Margin="0,50,0,0" 
+       Visibility="Visible" />
 
         <TextBlock Text="{Binding Path=RoundLengthMenu, Mode=OneWay}"
-           FontSize="48"
-           HorizontalAlignment="Center"
-           Margin="0,150,0,0" />
+       FontSize="48"
+       HorizontalAlignment="Center"
+       Margin="0,150,0,0" />
 
         <Button  x:Name="subtractRoundLengthButton" Content="-" FontSize="24" FontWeight="Bold"
-        HorizontalAlignment="Right" VerticalAlignment="Top"
-        Margin="0,200,50,0" Click="SubtractRoundLength" />
+              HorizontalAlignment="Right" VerticalAlignment="Top"
+              Margin="0,170,500,0" Width="50" Click="SubtractRoundLength" />
 
-        
         <Button x:Name="addRoundLengthButton" Content="+" FontSize="24" FontWeight="Bold"
-        HorizontalAlignment="Right" VerticalAlignment="Top"
-        Margin="0,200,100,0" Click="AddRoundLength" />
+              HorizontalAlignment="Right" VerticalAlignment="Top"
+              Margin="0,170,600,0" Width="50" Click="AddRoundLength" />
 
         <TextBlock Text="{Binding Path=RestTimeLengthMenu, Mode=OneWay}"
-           FontSize="48"
-           HorizontalAlignment="Center"
-           Margin="0,250,0,0" 
-           Visibility="Visible" />
+       FontSize="48"
+       HorizontalAlignment="Center"
+       Margin="0,250,0,0" 
+       Visibility="Visible" />
 
         <Button x:Name="subtractRestLengthButton" Content="-" FontSize="24" FontWeight="Bold"
-        HorizontalAlignment="Right" VerticalAlignment="Top"
-        Margin="0,250,50,0" Click="SubtractRestLength" />
-        
+              HorizontalAlignment="Right" VerticalAlignment="Top"
+              Margin="0,265,500,0" Width="50" Click="SubtractRestLength" />
+
         <Button x:Name="addRestLengthButton" Content="+" FontSize="24" FontWeight="Bold"
-        HorizontalAlignment="Right" VerticalAlignment="Top"
-        Margin="0,250,100,0" Click="AddRestLength" />
+              HorizontalAlignment="Right" VerticalAlignment="Top"
+              Margin="0,265,600,0" Width="50" Click="AddRestLength" />
 
         <TextBlock Text="{Binding Path=RoundsMenu, Mode=OneWay}"
-           FontSize="48"
-           HorizontalAlignment="Center"
-           Margin="0,350,0,0"
-           Visibility="Visible" />
+       FontSize="48"
+       HorizontalAlignment="Center"
+       Margin="0,350,0,0"
+       Visibility="Visible" />
 
         <Button x:Name="subtractRoundsButton" Content="-" FontSize="24" FontWeight="Bold"
- HorizontalAlignment="Right" VerticalAlignment="Top"
- Margin="0,300,50,0" Click="SubtractRounds" />
+          HorizontalAlignment="Right" VerticalAlignment="Top"
+          Margin="0,370,500,0" Width="50" Click="SubtractRounds" />
 
         <Button x:Name="addRoundsButton" Content="+" FontSize="24" FontWeight="Bold"
- HorizontalAlignment="Right" VerticalAlignment="Top"
- Margin="0,300,100,0" Click="AddRounds" />
+          HorizontalAlignment="Right" VerticalAlignment="Top"
+          Margin="0,370,600,0" Width="50" Click="AddRounds" />
 
         <Button Content="Begin Training" FontSize="24" FontWeight="Bold"
-        HorizontalAlignment="Center" VerticalAlignment="Top"
-        Margin="0,450,0,0" Click="BeginTrainingButton" />
+          HorizontalAlignment="Center" VerticalAlignment="Top"
+          Margin="0,450,0,0" Click="BeginTrainingButton" />
     </Grid>
 </Window>
